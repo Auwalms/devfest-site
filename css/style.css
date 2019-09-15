@@ -300,6 +300,15 @@ h5,
   }
 }
 
+@media (max-width: 600px) {
+  .main-header-1{
+    margin: 50px 0 10px 0 !important;
+  }
+  .main-header-2{
+    font-size: 3.2rem !important;
+  }
+}
+
 .play-single-big {
   width: 90px;
   height: 90px;
