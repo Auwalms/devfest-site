@@ -301,10 +301,11 @@ h5,
 }
 
 @media (max-width: 600px) {
-  .main-header-1{
+  .main-header-1 {
     margin: 50px 0 10px 0 !important;
   }
-  .main-header-2{
+
+  .main-header-2 {
     font-size: 3.2rem !important;
   }
 }
@@ -1181,4 +1182,14 @@ h5,
 
 .magic {
   margin-top: 2rem
+}
+
+.gdev-logo {
+  height: 5pc
+}
+
+@media (max-width: 700px) {
+  .gdev-logo {
+    height: 3pc
+  }
 }
