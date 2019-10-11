@@ -65,8 +65,8 @@
       <div class="row align-items-center">
         <div class="col-md-10">
           <h3 class="d-block mb-4" data-aos="fade-up" data-aos-delay="100">Speakers</h3>
-          <span class="d-block mb-3 caption" data-aos="fade-up">Want to rock the stage at #DevFestAbuja? Click
-            on the button below to submit a proposal</span>
+          <!-- <span class="d-block mb-3 caption" data-aos="fade-up">Want to rock the stage at #DevFestAbuja? Click
+            on the button below to submit a proposal</span> -->
 
         </div>
       </div>
@@ -74,7 +74,7 @@
   </div>
 
 
-  <div class="site-section" data-aos="fade">
+  <!-- <div class="site-section" data-aos="fade">
     <div class="container">
       <div class="row" data-aos="fade-up" data-aos-delay="500">
         <div class="col-12 text-center pt-5">
@@ -84,7 +84,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div class="site-section" data-aos="fade">
     <div class="container">
@@ -150,30 +150,40 @@
   <script src="js/popper.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/aos.js"></script>
-  <script src="js/main.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-firestore.js"></script>
+  <script src=" js/main.js"> </script>
   <script src="js/data/speakers.js"></script>
 
   <script>
-    const speakersCards = speakers.map(speaker => {
-      return (`
-        <div class="col-sm-12 col-md-4 mb-5">
-          <div class="card bg-dark " style="width: 18rem;">
-            <div class="mx-4 my-3">
-              <img src="${speaker.image_url}" class="card-img-top rounded-circle" alt="...">
+    firebase
+      .firestore()
+      .collection("speakers")
+      .get()
+      .then(speakers => {
+        const speakersCards = speakers.docs.map(speaker => {
+          return (`
+            <div class="col-sm-12 col-md-4 mb-5">
+              <div class="card bg-dark " style="width: 18rem;">
+                <div class="mx-4 my-3">
+                  <img src="${speaker.data().avatar}" class="card-img-top rounded-circle" alt="...">
+                </div>
+                <hr>
+                <div class="card-body">
+                  <h5 class="card-title text-white">${speaker.data().name}</h5>
+                  <small>${speaker.data().company}</small>
+                  <p class="card-text text-white">${speaker.data().topic} </p>
+                </div>
+              </div>
             </div>
-            <hr>
-            <div class="card-body">
-              <h5 class="card-title text-white">${speaker.name}</h5>
-              <small>${speaker.company}</small>
-              <p class="card-text text-white">${speaker.topic} </p>
-              <a href="#" class="btn">Go somewhere</a>
-            </div>
-          </div>
-        </div>
-      `)
-    }).join('');
+          `)
+        }).join('');
+        document.querySelector('.speakers-row').innerHTML = speakersCards
+      });
 
-    // document.querySelector('.speakers-row').innerHTML = speakersCards
+
+    // console.log(speakersCards)
+
   </script>
 
 </body>
