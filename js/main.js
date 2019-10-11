@@ -1,92 +1,104 @@
- AOS.init({
- 	duration: 800,
- 	easing: 'slide',
- 	once: true
- });
+AOS.init({
+  duration: 800,
+  easing: "slide",
+  once: true
+});
 
- jQuery(document).ready(function ($) {
+// Your web app's Firebase configuration
+var firebaseConfig = {
+  apiKey: "AIzaSyClHC6GCL2u6t_-hF4rz9mSHxi2TaFGrp0",
+  authDomain: "devfest-abuja.firebaseapp.com",
+  databaseURL: "https://devfest-abuja.firebaseio.com",
+  projectId: "devfest-abuja",
+  storageBucket: "devfest-abuja.appspot.com",
+  messagingSenderId: "595188594579",
+  appId: "1:595188594579:web:f18586003e9a7df9d91a66",
+  measurementId: "G-7JQVQYH856"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
- 	"use strict";
+jQuery(document).ready(function($) {
+  "use strict";
 
+  var siteMenuClone = function() {
+    $(".js-clone-nav").each(function() {
+      var $this = $(this);
+      $this
+        .clone()
+        .attr("class", "site-nav-wrap")
+        .appendTo(".site-mobile-menu-body");
+    });
 
+    setTimeout(function() {
+      var counter = 0;
+      $(".site-mobile-menu .has-children").each(function() {
+        var $this = $(this);
 
- 	var siteMenuClone = function () {
+        $this.prepend('<span class="arrow-collapse collapsed">');
 
- 		$('.js-clone-nav').each(function () {
- 			var $this = $(this);
- 			$this.clone().attr('class', 'site-nav-wrap').appendTo('.site-mobile-menu-body');
- 		});
+        $this.find(".arrow-collapse").attr({
+          "data-toggle": "collapse",
+          "data-target": "#collapseItem" + counter
+        });
 
+        $this.find("> ul").attr({
+          class: "collapse",
+          id: "collapseItem" + counter
+        });
 
- 		setTimeout(function () {
+        counter++;
+      });
+    }, 1000);
 
- 			var counter = 0;
- 			$('.site-mobile-menu .has-children').each(function () {
- 				var $this = $(this);
+    $("body").on("click", ".arrow-collapse", function(e) {
+      var $this = $(this);
+      if (
+        $this
+          .closest("li")
+          .find(".collapse")
+          .hasClass("show")
+      ) {
+        $this.removeClass("active");
+      } else {
+        $this.addClass("active");
+      }
+      e.preventDefault();
+    });
 
- 				$this.prepend('<span class="arrow-collapse collapsed">');
+    $(window).resize(function() {
+      var $this = $(this),
+        w = $this.width();
 
- 				$this.find('.arrow-collapse').attr({
- 					'data-toggle': 'collapse',
- 					'data-target': '#collapseItem' + counter,
- 				});
+      if (w > 768) {
+        if ($("body").hasClass("offcanvas-menu")) {
+          $("body").removeClass("offcanvas-menu");
+        }
+      }
+    });
 
- 				$this.find('> ul').attr({
- 					'class': 'collapse',
- 					'id': 'collapseItem' + counter,
- 				});
+    $("body").on("click", ".js-menu-toggle", function(e) {
+      var $this = $(this);
+      e.preventDefault();
 
- 				counter++;
+      if ($("body").hasClass("offcanvas-menu")) {
+        $("body").removeClass("offcanvas-menu");
+        $this.removeClass("active");
+      } else {
+        $("body").addClass("offcanvas-menu");
+        $this.addClass("active");
+      }
+    });
 
- 			});
-
- 		}, 1000);
-
- 		$('body').on('click', '.arrow-collapse', function (e) {
- 			var $this = $(this);
- 			if ($this.closest('li').find('.collapse').hasClass('show')) {
- 				$this.removeClass('active');
- 			} else {
- 				$this.addClass('active');
- 			}
- 			e.preventDefault();
-
- 		});
-
- 		$(window).resize(function () {
- 			var $this = $(this),
- 				w = $this.width();
-
- 			if (w > 768) {
- 				if ($('body').hasClass('offcanvas-menu')) {
- 					$('body').removeClass('offcanvas-menu');
- 				}
- 			}
- 		})
-
- 		$('body').on('click', '.js-menu-toggle', function (e) {
- 			var $this = $(this);
- 			e.preventDefault();
-
- 			if ($('body').hasClass('offcanvas-menu')) {
- 				$('body').removeClass('offcanvas-menu');
- 				$this.removeClass('active');
- 			} else {
- 				$('body').addClass('offcanvas-menu');
- 				$this.addClass('active');
- 			}
- 		})
-
- 		// click outisde offcanvas
- 		$(document).mouseup(function (e) {
- 			var container = $(".site-mobile-menu");
- 			if (!container.is(e.target) && container.has(e.target).length === 0) {
- 				if ($('body').hasClass('offcanvas-menu')) {
- 					$('body').removeClass('offcanvas-menu');
- 				}
- 			}
- 		});
- 	};
- 	siteMenuClone();
-
- });
+    // click outisde offcanvas
+    $(document).mouseup(function(e) {
+      var container = $(".site-mobile-menu");
+      if (!container.is(e.target) && container.has(e.target).length === 0) {
+        if ($("body").hasClass("offcanvas-menu")) {
+          $("body").removeClass("offcanvas-menu");
+        }
+      }
+    });
+  };
+  siteMenuClone();
+});
