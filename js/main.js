@@ -4,20 +4,6 @@ AOS.init({
   once: true
 });
 
-// Your web app's Firebase configuration
-var firebaseConfig = {
-  apiKey: "AIzaSyClHC6GCL2u6t_-hF4rz9mSHxi2TaFGrp0",
-  authDomain: "devfest-abuja.firebaseapp.com",
-  databaseURL: "https://devfest-abuja.firebaseio.com",
-  projectId: "devfest-abuja",
-  storageBucket: "devfest-abuja.appspot.com",
-  messagingSenderId: "595188594579",
-  appId: "1:595188594579:web:f18586003e9a7df9d91a66",
-  measurementId: "G-7JQVQYH856"
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-
 jQuery(document).ready(function($) {
   "use strict";
 
